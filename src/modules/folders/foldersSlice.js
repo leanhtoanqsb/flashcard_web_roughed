@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export const fetchFolders = createAsyncThunk ('folders/fetchFolders', async () => {
   const resp = await axios
-    .get('http://127.0.0.1:8000/api/folder/')
+    .get('/api/folder/')
     .then((res) => {return res.data})
     .catch((err) => {return err})
   return resp
@@ -11,7 +11,7 @@ export const fetchFolders = createAsyncThunk ('folders/fetchFolders', async () =
 
 export const addFolders = createAsyncThunk ('folders/addFolders', async (data) => {
   const resp = await axios
-    .post('http://127.0.0.1:8000/api/folder/', data)
+    .post('/api/folder/', data)
     .then((res) => {return res.data})
     .catch((err) => {return err})
   return resp

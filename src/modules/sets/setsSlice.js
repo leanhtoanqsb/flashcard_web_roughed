@@ -3,14 +3,14 @@ import axios from 'axios';
 
 export const fetchSets = createAsyncThunk ('sets/fetchSets', async () => {
   const resp = await axios
-    .get('http://127.0.0.1:8000/api/sets/')
+    .get('/api/sets/')
     .then((res) => {return res.data})
     .catch((err) => {return err})
   return resp
 })
 export const addSet = createAsyncThunk ('sets/addSet', async (data) => {
   const resp = await axios
-    .post('http://127.0.0.1:8000/api/sets/', data)
+    .post('/api/sets/', data)
     .then((res) => {return res.data})
     .catch((err) => {return err})
   return resp
