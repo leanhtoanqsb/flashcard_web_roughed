@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export const fetchFolders = createAsyncThunk ('folders/fetchFolders', async () => {
   const resp = await axios
-    .get('/api/folder/')
+    .get('https://flashcardserverroughed.herokuapp.com/api/folder/')
     .then((res) => {return res.data})
     .catch((err) => {return err})
   return resp
@@ -11,7 +11,7 @@ export const fetchFolders = createAsyncThunk ('folders/fetchFolders', async () =
 
 export const addFolders = createAsyncThunk ('folders/addFolders', async (data) => {
   const resp = await axios
-    .post('/api/folder/', data)
+    .post('https://flashcardserverroughed.herokuapp.com/api/folder/', data)
     .then((res) => {return res.data})
     .catch((err) => {return err})
   return resp
