@@ -3,7 +3,7 @@ import _ from 'lodash';
 import debounce from 'lodash/debounce';
 import { addSet } from './setsSlice.js';
 import { useDispatch } from "react-redux";
-import { useLocation, Redirect } from 'react-router-dom';
+import { Link, useLocation, Redirect } from 'react-router-dom';
 
 import { ThemeProvider } from "@material-ui/styles";
 import { createTheme } from "@material-ui/core/styles";

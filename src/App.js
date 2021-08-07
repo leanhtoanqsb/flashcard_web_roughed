@@ -3,7 +3,7 @@ import Header from './components/Header/index';
 import {BrowserRouter as Router, Switch} from 'react-router-dom';
 import routerConfig, {generateRoutes} from './routerConfig';
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { fetchSets  } from './modules/sets/setsSlice'
 import { fetchFolders  } from './modules/folders/foldersSlice'
 import CssBaseline from '@material-ui/core/CssBaseline';
