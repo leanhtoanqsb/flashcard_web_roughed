@@ -4,12 +4,17 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import { Link } from 'react-router-dom';
 
+const useStyles = makeStyles((theme) => ({
+}));
+
 export default function CreateMenu({
     createAnchorEl,
     isCreateMenuOpen,
     handleMenuClose,
     handleFoldersAddedFormOpen
   }) {
+  const classes = useStyles();
+
     return(
       <Menu
         anchorEl={createAnchorEl}

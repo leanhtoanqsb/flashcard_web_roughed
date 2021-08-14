@@ -1,16 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 
-import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
-import { ThemeProvider } from "@material-ui/styles";
-import { createTheme, makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 
-const THEME = createTheme({
-  typography: {
-    fontFamily: "Roboto",
-  },
-});
 
 const useStyles = makeStyles((theme) => ({
   root: {

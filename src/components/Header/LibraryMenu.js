@@ -4,11 +4,16 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import { Link } from 'react-router-dom';
 
+const useStyles = makeStyles((theme) => ({
+}));
+
 export default function LibraryMenu({
     libraryAnchorEl,
     isLibraryMenuOpen,
     handleMenuClose,
   }) {
+  const classes = useStyles();
+
     return <Menu
       anchorEl={libraryAnchorEl}
       anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}

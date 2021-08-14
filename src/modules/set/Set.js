@@ -2,7 +2,6 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { selectAllSets  } from 'modules/sets/setsSlice'
-import { Link } from 'react-router-dom';
 import SlideshowContainer from 'components/Slideshow/SlideshowContainer';
 
 import Paper from '@material-ui/core/Paper';

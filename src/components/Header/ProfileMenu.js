@@ -3,11 +3,16 @@ import { makeStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 
+const useStyles = makeStyles((theme) => ({
+}));
+
 export default function MobileMenu({
   profileAnchorEl,
   isProfileMenuOpen,
   handleMenuClose,
 }) {
+  const classes = useStyles();
+
   return (
     <Menu
       anchorEl={profileAnchorEl}

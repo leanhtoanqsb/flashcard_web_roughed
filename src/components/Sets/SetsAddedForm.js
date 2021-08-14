@@ -1,28 +1,17 @@
-import React, { useState, useRef, useCallback } from "react";
-import _ from 'lodash';
+import React, { useState } from "react";
 import debounce from 'lodash/debounce';
-import { addSet } from './setsSlice.js';
+import { addSet } from 'modules/sets/setsSlice.js';
 import { useDispatch } from "react-redux";
-import { Link, useLocation, Redirect } from 'react-router-dom';
+import { useLocation, Redirect } from 'react-router-dom';
 
-import { ThemeProvider } from "@material-ui/styles";
-import { createTheme } from "@material-ui/core/styles";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 import Input from "@material-ui/core/Input";
 
-const THEME = createTheme({
-  typography: {
-    fontFamily: "Roboto",
-  },
-});
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -73,8 +62,8 @@ export default function SetsAddedForm() {
   const [title, setTitle] = useState('')
   const [words, setWords] = useState([])
   const [numberOfTerm, setNumberOfTerm] = useState(4);
-  const handleTitleChange = _.debounce((e) => setTitle(e.target.value),250)
-  const handleWordChange = _.debounce((e,index,key) => {
+  const handleTitleChange = debounce((e) => setTitle(e.target.value),250)
+  const handleWordChange = debounce((e,index,key) => {
     setWords((prev) => {
       let newWords = [...prev]
       newWords[index] = {...(newWords[index] || {}), [key]: e.target.value}

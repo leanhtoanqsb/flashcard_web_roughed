@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { selectAllFolders } from "modules/folders/foldersSlice";
-import FoldersAddedDialog from "modules/folders/FoldersAddedDialog";
+import FoldersAddedDialog from "components/Folders/FoldersAddedDialog";
 import { Link } from "react-router-dom";
 
 import { makeStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import ButtonBase from "@material-ui/core/ButtonBase";
@@ -92,7 +91,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ComplexGrid() {
   const classes = useStyles();
-  const dispatch = useDispatch();
   const folders = useSelector(selectAllFolders);
   const [foldersAddedFormOpen, setFoldersAddedFormOpen] = useState(false);
   const handleAddedFormClose = () => {

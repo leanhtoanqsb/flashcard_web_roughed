@@ -1,24 +1,16 @@
-import React, { useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { selectAllSets, fetchSets  } from 'modules/sets/setsSlice'
+import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
+import { selectAllSets } from 'modules/sets/setsSlice'
 import { selectAllFolders  } from 'modules/folders/foldersSlice'
 import { Link, useParams } from 'react-router-dom';
-import SetsAddedDialog from './SetsAddedDialog';
+import SetsAddedDialog from 'components/Sets/SetsAddedDialog';
 
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import FolderOpenIcon from "@material-ui/icons/FolderOpen";
 import ButtonBase from "@material-ui/core/ButtonBase";
-import { ThemeProvider } from "@material-ui/styles";
-import { createTheme, makeStyles } from "@material-ui/core/styles";
-
-const THEME = createTheme({
-  typography: {
-    fontFamily: "Roboto",
-  },
-});
+import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -74,6 +66,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function Sets() {
+  const { folderId } = useParams();
   const classes = useStyles();
   const [addedFormOpen, setAddedFormOpen] = useState(false);
   const handleAddedFormClose = () => {
@@ -83,20 +76,22 @@ export default function Sets() {
     setAddedFormOpen(true);
   };
 
-  const sets = useSelector(state => 
-    selectAllSets(state)
+  const folder = useSelector(state =>
+    selectAllFolders(state).find(folder => folder.id === parseInt(folderId)) 
   )
-  if (!sets) {
+  const sets = useSelector(state => 
+    selectAllSets(state).filter(set => folder ? folder.folder_owned_sets.includes(set.id ) : folderId ? false : true)
+  )
+
+  if (!folder && (Array.isArray(sets) && sets.length === 0)) {
     return (
       <div>
-        <h1>Page not found!</h1>
+        <h1>Folder not found!</h1>
       </div>
     )
   }
 
-
   return (
-    <ThemeProvider theme={THEME}>
     <div className={classes.root}>
         <div className={classes.userInfoSection}>
           <Container
@@ -132,6 +127,7 @@ export default function Sets() {
             <SetsAddedDialog
               open={addedFormOpen}
               handleClose={handleAddedFormClose}
+              folderId={folderId}
             />
     {/* Slideshow start*/}
       <div>
@@ -157,7 +153,6 @@ export default function Sets() {
       </Container>
       </div>
       </div>
-    </ThemeProvider>
   );
 }
 

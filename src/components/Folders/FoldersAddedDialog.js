@@ -1,10 +1,9 @@
 import React, {useState} from 'react';
 import { useDispatch } from 'react-redux';
 import { addFolders } from 'modules/folders/foldersSlice';
-import _ from 'lodash';
 import debounce from 'lodash/debounce';
 
-/*import { makeStyles } from '@material-ui/core/styles';*/
+import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -14,13 +13,16 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
 import FormControl from '@material-ui/core/FormControl';
 
+const useStyles = makeStyles((theme) => ({
+}));
+
 export default function FoldersAddedForm({ open, handleClose }) {
+  const classes = useStyles();
   const dispatch = useDispatch()
   const [folderName, setFolderName] = useState('')
-  const handleFolderNameChange = _.debounce((value) => {
+  const handleFolderNameChange = debounce((value) => {
     setFolderName(value)
   }, 100)
-const data = {'name': folderName, 'folder_owned_sets': []}
   return (
     <Dialog open={open} onClose={handleClose}>
       <DialogTitle>Fill the form</DialogTitle>

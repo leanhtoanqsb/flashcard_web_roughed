@@ -8,12 +8,17 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 
+const useStyles = makeStyles((theme) => ({
+}));
+
 export default function MobileMenu({
   mobileMoreAnchorEl,
   isMobileMenuOpen,
   handleMobileMenuClose,
   handleProfileMenuOpen,
 }) {
+  const classes = useStyles();
+
   return (
     <Menu
       anchorEl={mobileMoreAnchorEl}

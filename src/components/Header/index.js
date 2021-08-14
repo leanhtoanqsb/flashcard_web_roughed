@@ -1,9 +1,10 @@
-import React, {useReducer} from 'react';
+import React from 'react';
 import LibraryMenu from './LibraryMenu';
 import CreateMenu from './CreateMenu';
 import MobileMenu from './MobileMenu';
 import ProfileMenu from './ProfileMenu';
-import FoldersAddedDialog from 'modules/folders/FoldersAddedDialog';
+import FoldersAddedDialog from 'components/Folders/FoldersAddedDialog';
+import NavExpand from 'components/Header/NavExpand/index';
 import { Link } from 'react-router-dom';
 
 import { alpha, makeStyles } from '@material-ui/core/styles';
@@ -19,6 +20,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Button from '@material-ui/core/Button';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import MenuIcon from '@material-ui/icons/Menu';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -89,12 +91,21 @@ const useStyles = makeStyles((theme) => ({
   },
   sectionMobile: {
     display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
     [theme.breakpoints.up('md')]: {
       display: 'none',
     },
   },
-  link: {
-  }
+  homeIcon: {
+    color: 'white',
+    textDecoration: 'none',
+    marginLeft: theme.spacing(2),
+    marginRight: theme.spacing(2),
+  },
+  expandMenuIcon: {
+    cursor: 'pointer',
+  },
 }));
 
 export default function PrimarySearchAppBar() {
@@ -103,6 +114,7 @@ export default function PrimarySearchAppBar() {
   const [createAnchorEl, setCreateAnchorEl] = React.useState(null);
   const [profileAnchorEl, setProfileAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const [isNavExpanded, setIsNavExpanded] = React.useState(false)
 
   const isLibraryMenuOpen = Boolean(libraryAnchorEl);
   const isCreateMenuOpen = Boolean(createAnchorEl);
@@ -130,6 +142,7 @@ export default function PrimarySearchAppBar() {
     setLibraryAnchorEl(null);
     handleMobileMenuClose();
   };
+  const handleNavExpanded = (state) => {setIsNavExpanded(state)}
 
   const [foldersAddedFormOpen, setFoldersAddedFormOpen] = React.useState(false);
   const handleFoldersAddedFormClose = () => {
@@ -144,15 +157,20 @@ export default function PrimarySearchAppBar() {
       <AppBar elevation={0} position="static">
         <Toolbar>
           <div className={classes.sectionMobile}>
-          <Button color='inherit' component={Link} to='/'>
+          <MenuIcon
+            className={classes.expandMenuIcon}
+            onClick={() => handleNavExpanded(true)}
+          />
+          <Link className={classes.homeIcon} to='/'
+          >
           <Typography
             className={classes.title}
-            variant="h6"
+            variant="h5"
             noWrap
           >
             F
           </Typography>
-          </Button>
+          </Link>
           </div>
           <div className={classes.sectionDesktop}>
           <Typography
@@ -253,6 +271,10 @@ export default function PrimarySearchAppBar() {
       <FoldersAddedDialog
         open={foldersAddedFormOpen}
         handleClose={handleFoldersAddedFormClose}
+      />
+      <NavExpand
+        isOpen={isNavExpanded}
+        handleOpen={handleNavExpanded}
       />
     </div>
   );
