@@ -10,7 +10,9 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems:'flex-start',
     flexDirection: 'column',
-    paddingLeft: theme.spacing(4)
+  },
+  item: {
+    marginBottom: theme.spacing(1),
   },
 }));
 
@@ -20,7 +22,10 @@ export default function CreateAccordion({handleNavExpanded}) {
   const LibraryMenuItems = () => {
     return(
       <div className={classes.menuItems}>
-        <div onClick={() => handleNavExpanded(false)}>
+        <div
+          className={classes.item}
+          onClick={() => handleNavExpanded(false)}
+        >
           <NavLinkCustom
             variant='h6'
           >

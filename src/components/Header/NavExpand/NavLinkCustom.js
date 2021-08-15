@@ -14,6 +14,10 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   title: {
+    textTransform: 'lowercase',
+    '&::first-letter': {
+      textTransform: 'uppercase',
+    },
   },
 }));
 

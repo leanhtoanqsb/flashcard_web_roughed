@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
     textTransform: 'capitalize',
   },
   menuContainer: {
-    paddingRight: theme.spacing(2),
+    paddingLeft: theme.spacing(2),
   },
 }));
 

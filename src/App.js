@@ -7,6 +7,15 @@ import { useDispatch } from 'react-redux'
 import { fetchSets  } from './modules/sets/setsSlice'
 import { fetchFolders  } from './modules/folders/foldersSlice'
 import CssBaseline from '@material-ui/core/CssBaseline';
+import { ThemeProvider } from "@material-ui/styles";
+import { createTheme } from "@material-ui/core/styles";
+
+const THEME = createTheme({
+  customColor: {
+    textGray: '#cedaf3',
+    dividerGray: 'rgba(255,255,255,0.2)',
+  },
+});
 
 function App() {
   const dispatch = useDispatch()
@@ -16,19 +25,17 @@ function App() {
   }, [dispatch])
   return (
       <Router>
+      <ThemeProvider theme={THEME}>
       <CssBaseline />
         <div className="App">
           <Header />
-          <div style={{
-            background: '#f6f7fb',
-            position: 'relative',
-            minHeight: '100vh',
-          }}>
+          <div>
           <Switch>
             {generateRoutes(routerConfig)}
           </Switch>
           </div>
         </div>
+      </ThemeProvider>
       </Router>
   );
 }
