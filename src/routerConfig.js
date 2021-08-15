@@ -3,6 +3,7 @@ import {Route} from 'react-router-dom';
 import Folders from 'modules/folders/Folders';
 import Set from 'modules/set/Set';
 import Sets from 'modules/sets/Sets';
+import SetInFolder from 'modules/sets/SetInFolder';
 import SetsAddedForm from 'components/Sets/SetsAddedForm';
 
 const routerConfig = {
@@ -24,7 +25,7 @@ const routerConfig = {
   SETS_IN_FOLDER: {
     name: 'SETS_IN_FOLDER',
     path: '/folder/:folderId',
-    Component: () => <Sets />,
+    Component: () => <SetInFolder />,
   },
   SET: {
     name: 'SET',

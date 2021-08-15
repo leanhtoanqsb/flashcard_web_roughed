@@ -152,9 +152,6 @@ export default function ComplexGrid() {
                         <Typography variant="h5" className={classes.folderName}>
                           {folder.name}
                         </Typography>
-                        <IconButton>
-                          <DeleteIcon />
-                        </IconButton>
                       </div>
                     </Paper>
                   </Link>

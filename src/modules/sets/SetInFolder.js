@@ -10,40 +10,37 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import ButtonBase from "@material-ui/core/ButtonBase";
+import FolderOpenIcon from "@material-ui/icons/FolderOpen";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
   },
-  userInfoSection: {
+  folderInfoSection: {
     width: "100%",
     padding: theme.spacing(2),
     background: "white",
   },
-  userInfoInner: {
+  folderInfoInner: {
+  },
+  folderInfo: {
     display: "flex",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center",
-    flexDirection: "row",
   },
-  userImage: {
-    paddingRight: theme.spacing(2),
+  folderName: {
+    marginLeft: theme.spacing(2),
+    textTransform: 'uppercase',
   },
-  image: {
-    width: 128,
-    height: 128,
-    borderRadius: "50%",
-    border: "1px solid red",
-  },
-  img: {
-    margin: "auto",
-    display: "block",
-    maxWidth: "100%",
-    maxHeight: "100%",
-  },
-  userText: {
+  descriptionContainer: {
     flexGrow: 1,
+  },
+  folderDescription: {
+    flexGrow: 1,
+  },
+  folderIcon: {
+    fontSize: '64px',
   },
   setListSection: {
     padding: theme.spacing(2),
@@ -80,10 +77,10 @@ export default function Sets() {
     selectAllFolders(state).find(folder => folder.id === parseInt(folderId)) 
   )
   const sets = useSelector(state => 
-    selectAllSets(state).filter(set => folder ? folder.folder_owned_sets.includes(set.id ) : folderId ? false : true)
+    selectAllSets(state).filter(set => folder ? folder.folder_owned_sets.includes(set.id ) : false)
   )
 
-  if (!folder && (Array.isArray(sets) && sets.length === 0)) {
+  if (!folder) {
     return (
       <div>
         <h1>Folder not found!</h1>
@@ -93,23 +90,29 @@ export default function Sets() {
 
   return (
     <div className={classes.root}>
-        <div className={classes.userInfoSection}>
+        <div className={classes.folderInfoSection}>
           <Container
-            className={classes.userInfoInner}
+            className={classes.folderInfoInner}
             disableGutters="true"
             maxWidth="md"
           >
-            <div className={classes.userImage}>
-              <ButtonBase className={classes.image}>
-                <img className={classes.img} alt="Avatar" src="" />
-              </ButtonBase>
-            </div>
-            <div className={classes.userText}>
-              <Typography gutterBottom variant="h4">
-                User Name
+            <div className={classes.folderInfo}>
+              <FolderOpenIcon
+                className={classes.folderIcon}
+              />
+              <Typography
+                className={classes.folderName}
+                variant="h4"
+              >
+                {folder.name}
               </Typography>
-              <Typography variant="body2" color="textSecondary">
-                ID:
+            </div>
+            <div className={classes.descriptionContainer}>
+              <Typography
+                className={classes.folderDescription}
+                variant="body2" color="textSecondary"
+              >
+                Description:
               </Typography>
             </div>
           </Container>
