@@ -18,8 +18,8 @@ const useStyles = makeStyles(theme => ({
     height: '36px',
     borderRadius: '50%',
     marginRight: theme.spacing(2),
-    color: theme.customColor.textGray,
-    border:`1px solid ${theme.customColor.dividerGray}`,
+    color: theme.customColor.text.gray,
+    border:`1px solid ${theme.customColor.border.gray}`,
     overflow: 'hidden',
   },
   img: {
@@ -35,6 +35,7 @@ const useStyles = makeStyles(theme => ({
   },
   linkContainer: {
     width: '100%',
+    paddingBottom: theme.spacing(1),
   },
 }));
 

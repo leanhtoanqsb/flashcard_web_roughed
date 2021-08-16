@@ -10,7 +10,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
     background: 'transparent',
-    color: '#cedaf3',
   },
   paper: {
     background: 'transparent',
@@ -30,10 +29,10 @@ const useStyles = makeStyles((theme) => ({
   },
   summaryContent: {
     flexGrow: '0',
-    color: '#cedaf3'
+    color: theme.customColor.text.gray,
   },
   summaryExpandIcon: {
-    color: '#cedaf3',
+    color: theme.customColor.text.gray,
   },
   heading: {
     fontWeight: '600',

@@ -9,11 +9,22 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import InputLabel from '@material-ui/core/InputLabel';
-import Input from '@material-ui/core/Input';
-import FormControl from '@material-ui/core/FormControl';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    background: '',
+  },
+  title: {
+    background: theme.customColor.background.primary,
+    '& *': {
+      color: 'white',
+    }
+  },
+  content: {
+    paddingTop: theme.spacing(2),
+  },
 }));
 
 export default function FoldersAddedForm({ open, handleClose }) {
@@ -25,18 +36,20 @@ export default function FoldersAddedForm({ open, handleClose }) {
   }, 100)
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>Fill the form</DialogTitle>
-      <DialogContent>
-        <form className=''>
-          <FormControl className=''>
-            <InputLabel htmlFor="name-input">Folder Name</InputLabel>
-            <Input
-              onChange={(e) => {handleFolderNameChange(e.target.value)}}
-              id="name-input"
-              aria-describedby="folder-name"
+      <DialogTitle
+        className={classes.title}
+        disableTypography
+      >
+        <Typography variant='h5'>Create new a folder</Typography>
+      </DialogTitle>
+      <DialogContent className={classes.content}>
+            <TextField
+              placeholder='Enter a title'
+              helperText='Title'
+              onChange={(e) => {
+                handleFolderNameChange(e.target.value)
+              }}
             />
-          </FormControl>
-        </form>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose} color="primary">
@@ -54,7 +67,7 @@ export default function FoldersAddedForm({ open, handleClose }) {
           }}
           
           color="primary">
-          Ok
+          Create
       </Button>
       </DialogActions>
     </Dialog>

@@ -12,8 +12,19 @@ import { createTheme } from "@material-ui/core/styles";
 
 const THEME = createTheme({
   customColor: {
-    textGray: '#cedaf3',
-    dividerGray: 'rgba(255,255,255,0.2)',
+    text: {
+      gray: '#cedaf3',
+    },
+    border: {
+      gray: 'rgba(255,255,255,0.2)',
+    },
+    divider: {
+      gray: 'rgba(255,255,255,0.2)',
+    },
+    background: {
+      primary: '#3f51b5',
+      gray: '#f6f7fb',
+    },
   },
 });
 

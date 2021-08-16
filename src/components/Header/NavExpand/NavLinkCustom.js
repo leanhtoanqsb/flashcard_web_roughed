@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 const useStyles = makeStyles((theme) => ({
   link: {
     textDecoration: 'none',
-    color: '#cedaf3',
+    color: theme.customColor.text.gray,
     '&:hover': {
       color: 'white',
     },
