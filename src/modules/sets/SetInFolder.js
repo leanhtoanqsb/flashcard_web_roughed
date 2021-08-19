@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import React, { useState, useRef } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { selectAllSets } from 'modules/sets/setsSlice'
-import { selectAllFolders  } from 'modules/folders/foldersSlice'
+import { selectAllFolders, editFolder,deleteFolder } from 'modules/folders/foldersSlice'
 import { Link, useParams } from 'react-router-dom';
 import SetsAddedDialog from 'components/Sets/SetsAddedDialog';
 
@@ -12,6 +12,10 @@ import Container from '@material-ui/core/Container';
 import ButtonBase from "@material-ui/core/ButtonBase";
 import FolderOpenIcon from "@material-ui/icons/FolderOpen";
 import { makeStyles } from "@material-ui/core/styles";
+import EditIcon from '@material-ui/icons/Edit';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
+import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,20 +31,34 @@ const useStyles = makeStyles((theme) => ({
   folderInfo: {
     display: "flex",
     justifyContent: "flex-start",
-    alignItems: "center",
+    alignItems: "flex-start",
   },
   folderName: {
     marginLeft: theme.spacing(2),
-    textTransform: 'uppercase',
+    '& textarea': {
+      lineHeight: '2rem',
+      color:'#000000',
+      fontSize: '2rem',
+    },
   },
-  descriptionContainer: {
-    flexGrow: 1,
+  icons: {
+    marginLeft: theme.spacing(2),
+    marginTop: theme.spacing(2),
+  },
+  icon: {
+    marginLeft: theme.spacing(1),
+  },
+  editIcon: {
+  },
+  cancelIcon: {
+  },
+  submitIcon: {
   },
   folderDescription: {
     flexGrow: 1,
   },
   folderIcon: {
-    fontSize: '64px',
+    fontSize: '3rem',
   },
   setListSection: {
     padding: theme.spacing(2),
@@ -65,6 +83,9 @@ const useStyles = makeStyles((theme) => ({
 export default function Sets() {
   const { folderId } = useParams();
   const classes = useStyles();
+  const dispatch = useDispatch()
+  const [isEditable, setIsEditable] = useState(false);
+  const folderNameRef = useRef(null)
   const [addedFormOpen, setAddedFormOpen] = useState(false);
   const handleAddedFormClose = () => {
     setAddedFormOpen(false);
@@ -87,7 +108,6 @@ export default function Sets() {
       </div>
     )
   }
-
   return (
     <div className={classes.root}>
         <div className={classes.folderInfoSection}>
@@ -96,24 +116,56 @@ export default function Sets() {
             disableGutters="true"
             maxWidth="md"
           >
-            <div className={classes.folderInfo}>
+            <div
+                onClick={() => dispatch(
+                  editFolder({folderId:folderId, data: {'name': 'd'}})
+                )}
+              className={classes.folderInfo}
+            >
               <FolderOpenIcon
                 className={classes.folderIcon}
               />
-              <Typography
-                className={classes.folderName}
-                variant="h4"
+              <TextField
+                inputRef={folderNameRef}
+                multiline={true}
+                fullWidth={true}
+                disabled={!isEditable}
+                InputProps={{
+                  style: {
+                    padding: '.625rem 0',
+                  },
+                  disableUnderline:'true',
+                }}
+                defaultValue={folder.name}
+                classes={{root:classes.folderName}}
+                
+              />
+              <div
+                style={{display: isEditable ? 'none' : 'flex' }}
+                className={classes.icons}
               >
-                {folder.name}
-              </Typography>
-            </div>
-            <div className={classes.descriptionContainer}>
-              <Typography
-                className={classes.folderDescription}
-                variant="body2" color="textSecondary"
+              <EditIcon
+                className={`${classes.editIcon} ${classes.icon}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsEditable(true);
+                  setTimeout(() => folderNameRef.current.focus(),100);
+                }}
+              />
+              </div>
+              <div
+                style={{display: isEditable ? 'flex' : 'none' }}
+                className={classes.icons}
               >
-                Description:
-              </Typography>
+              <HighlightOffIcon
+                className={`${classes.cancelIcon} ${classes.icon}`}
+                onClick={() => setIsEditable(false)}
+              />
+              <CheckCircleOutlineIcon
+                className={`${classes.submitIcon} ${classes.icon}`}
+                onClick={() => setIsEditable(false)}
+              />
+              </div>
             </div>
           </Container>
         </div>

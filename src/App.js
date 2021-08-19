@@ -3,7 +3,7 @@ import Header from './components/Header/index';
 import {BrowserRouter as Router, Switch} from 'react-router-dom';
 import routerConfig, {generateRoutes} from './routerConfig';
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { fetchSets  } from './modules/sets/setsSlice'
 import { fetchFolders  } from './modules/folders/foldersSlice'
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -30,8 +30,11 @@ const THEME = createTheme({
 
 function App() {
   const dispatch = useDispatch()
+  const folderStatus = useSelector(state => state.folders.status)
   useEffect(() => {
     dispatch(fetchFolders())
+  }, [dispatch])
+  useEffect(() => {
     dispatch(fetchSets())
   }, [dispatch])
   return (
@@ -42,7 +45,9 @@ function App() {
           <Header />
           <div>
           <Switch>
-            {generateRoutes(routerConfig)}
+            {
+              generateRoutes(routerConfig)
+            }
           </Switch>
           </div>
         </div>

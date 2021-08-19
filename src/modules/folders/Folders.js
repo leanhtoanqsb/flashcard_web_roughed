@@ -81,7 +81,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ComplexGrid() {
+export default function Folders() {
   const classes = useStyles();
   const folders = useSelector(selectAllFolders);
   const [foldersAddedFormOpen, setFoldersAddedFormOpen] = useState(false);

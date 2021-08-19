@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import { useDispatch } from 'react-redux';
 import { addFolders } from 'modules/folders/foldersSlice';
 import debounce from 'lodash/debounce';
+import ResponsiveDialog from 'components/Dialog/ResponsiveDialog';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -11,6 +12,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,13 +32,15 @@ const useStyles = makeStyles((theme) => ({
 
 export default function FoldersAddedForm({ open, handleClose }) {
   const classes = useStyles();
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const dispatch = useDispatch()
   const [folderName, setFolderName] = useState('')
   const handleFolderNameChange = debounce((value) => {
     setFolderName(value)
   }, 100)
   return (
-    <Dialog open={open} onClose={handleClose}>
+    <ResponsiveDialog open={open} onClose={handleClose}>
       <DialogTitle
         className={classes.title}
         disableTypography
@@ -70,6 +75,6 @@ export default function FoldersAddedForm({ open, handleClose }) {
           Create
       </Button>
       </DialogActions>
-    </Dialog>
+    </ResponsiveDialog>
   )
 }
