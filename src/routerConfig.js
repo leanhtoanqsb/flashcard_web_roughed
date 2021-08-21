@@ -5,40 +5,47 @@ import Set from 'modules/set/Set';
 import Sets from 'modules/sets/Sets';
 import SetInFolder from 'modules/sets/SetInFolder';
 import SetsAddedForm from 'components/Sets/SetsAddedForm';
+import HomePage from 'modules/homePage/HomePage';
+import LibraryPage from 'modules/libraryPage/LibraryPage';
 
 const routerConfig = {
-  FOLDERS: {
-    name: 'FOLDERS',
+  HOMEPAGE: {
+    name: 'HOMEPAGE',
     path: '/',
-    Component: () => <Folders />,
+    Component: () => <HomePage />,
+    exact: true,
   },
-  SETS: {
-    name: 'SETS',
-    path: '/sets',
-    Component: () => <Sets />,
+  LIBRARY: {
+    name: 'LIBRARY',
+    path: '/library',
+    Component: () => <LibraryPage />,
+    exact: false,
   },
   SETS_ADDED_FORM: {
     name: 'SETS_ADDED_FORM',
     path: '/create-set',
     Component: () => <SetsAddedForm />,
+    exact: true,
   },
   SETS_IN_FOLDER: {
     name: 'SETS_IN_FOLDER',
     path: '/folder/:folderId',
     Component: () => <SetInFolder />,
+    exact: true,
   },
   SET: {
     name: 'SET',
     path: '/set/:setId',
     Component: () => <Set />,
+    exact: true,
   },
 };
 
 export const generateRoutes = (config) => {
   return Object.values(config).map(route => {
-    const {name, path, Component} = route;
+    const {name, path, Component, exact} = route;
     return (
-      <Route exact path={path} key={name} component={Component} />
+      <Route exact={exact} path={path} key={name} component={Component} />
     );
   });
 };

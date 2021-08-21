@@ -24,13 +24,13 @@ export default function LibraryMenu({
       getContentAnchorEl={null}
     >
       <MenuItem
-        component={Link} to='/sets'
+        component={Link} to='/library/sets'
         onClick={handleMenuClose}
       >
         StudySet
       </MenuItem>
       <MenuItem
-        component={Link} to='/'
+        component={Link} to='/library/folders'
         onClick={() => {
           handleMenuClose()
         }}

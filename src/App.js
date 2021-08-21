@@ -1,6 +1,6 @@
 import './App.css';
 import Header from './components/Header/index';
-import {BrowserRouter as Router, Switch} from 'react-router-dom';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import routerConfig, {generateRoutes} from './routerConfig';
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
@@ -9,6 +9,7 @@ import { fetchFolders  } from './modules/folders/foldersSlice'
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from "@material-ui/styles";
 import { createTheme } from "@material-ui/core/styles";
+import LibraryPage from 'modules/libraryPage/LibraryPage';
 
 const THEME = createTheme({
   customColor: {

@@ -94,27 +94,6 @@ export default function Folders() {
 
   return (
       <div className={classes.root}>
-        <div className={classes.userInfoSection}>
-          <Container
-            className={classes.userInfoInner}
-            disableGutters="true"
-            maxWidth="md"
-          >
-            <div className={classes.userImage}>
-              <ButtonBase className={classes.image}>
-                <img className={classes.img} alt="Avatar" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" />
-              </ButtonBase>
-            </div>
-            <div className={classes.userText}>
-              <Typography gutterBottom variant="h4">
-                User Name
-              </Typography>
-              <Typography variant="body2" color="textSecondary">
-                ID:
-              </Typography>
-            </div>
-          </Container>
-        </div>
         <div className={classes.foldersListSection}>
           <Container disableGutters="true" maxWidth="md">
             <Button

@@ -93,27 +93,6 @@ export default function Sets() {
 
   return (
     <div className={classes.root}>
-        <div className={classes.userInfoSection}>
-          <Container
-            className={classes.userInfoInner}
-            disableGutters="true"
-            maxWidth="md"
-          >
-            <div className={classes.userImage}>
-              <ButtonBase className={classes.image}>
-                <img className={classes.img} alt="Avatar" src="" />
-              </ButtonBase>
-            </div>
-            <div className={classes.userText}>
-              <Typography gutterBottom variant="h4">
-                User Name
-              </Typography>
-              <Typography variant="body2" color="textSecondary">
-                ID:
-              </Typography>
-            </div>
-          </Container>
-        </div>
     <div className={classes.setListSection}>
       <Container disableGutters="true" maxWidth="md">
             <Button
@@ -155,5 +134,3 @@ export default function Sets() {
       </div>
   );
 }
-
-

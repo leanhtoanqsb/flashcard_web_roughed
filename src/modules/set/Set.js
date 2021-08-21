@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useRef } from 'react'
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { selectAllSets  } from 'modules/sets/setsSlice'
@@ -8,6 +8,11 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
+import Input from '@material-ui/core/Input';
+import InputBase from '@material-ui/core/InputBase';
+import EditIcon from '@material-ui/icons/Edit';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,17 +40,92 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(3),
     width: '100%',
-    height: '100px',
-    padding: theme.spacing(2)
+    padding: '2rem 2rem',
+    display: 'flex',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+  },
+  inputRoot: {
+    padding: 0,
+  },
+  input: {
+    color: 'black',
+  },
+  icon: {
+    margin: 'auto 0',
+    marginLeft: theme.spacing(1),
+  },
+  editIcon: {
+  },
+  cancelIcon: {
+  },
+  submitIcon: {
   },
 }));
 
+function EditablePaper({content}) {
+  const classes = useStyles();
+  const [isEditable, setIsEditable] = useState(false);
+  const termRef = useRef(null)
+
+  const CustomInput = ({...props}) => {
+    return(
+      <InputBase
+        classes={{
+          root: classes.inputRoot,
+          input: classes.input,
+        }}
+        disabled={!isEditable}
+        fullWidth
+        {...props}
+      />
+    )
+  }
+
+  return(
+    <Paper className={classes.paper}>
+      <CustomInput
+        inputRef={termRef}
+        defaultValue={content.term}
+      />
+      <CustomInput
+        defaultValue={content.meaning}
+        multiline
+      />
+      <div
+        style={{display: isEditable ? 'none' : 'flex' }}
+        className={classes.icons}
+      >
+      <EditIcon
+        className={`${classes.editIcon} ${classes.icon}`}
+        onClick={(e) => {
+          e.preventDefault();
+          setIsEditable(true);
+          setTimeout(() => termRef.current.focus(),100);
+        }}
+      />
+      </div>
+      <div
+        style={{display: isEditable ? 'flex' : 'none' }}
+        className={classes.icons}
+      >
+      <HighlightOffIcon
+        className={`${classes.cancelIcon} ${classes.icon}`}
+        onClick={() => setIsEditable(false)}
+      />
+      <CheckCircleOutlineIcon
+        className={`${classes.submitIcon} ${classes.icon}`}
+        onClick={() => setIsEditable(false)}
+      />
+      </div>
+    </Paper>
+  )
+}
 
 export default function Sets({match}) {
 
   const classes = useStyles();
   const { setId } = useParams()
-  
 
   const set = useSelector(state =>
     selectAllSets(state).find(set => set.id === parseInt(setId) )
@@ -80,14 +160,7 @@ export default function Sets({match}) {
         {
           words.map((word) => {
             return(
-                <Paper className={classes.paper}>
-                  <Typography variant="body2" gutterBottom>
-                    {word.term}
-                  </Typography>
-                  <Typography variant="body2" gutterBottom>
-                    {word.meaning}
-                  </Typography>
-                </Paper>
+              <EditablePaper content={word}/>
             )
           })
         }

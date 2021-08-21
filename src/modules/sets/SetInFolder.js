@@ -4,6 +4,7 @@ import { selectAllSets } from 'modules/sets/setsSlice'
 import { selectAllFolders, editFolder,deleteFolder } from 'modules/folders/foldersSlice'
 import { Link, useParams } from 'react-router-dom';
 import SetsAddedDialog from 'components/Sets/SetsAddedDialog';
+import SetCard from 'components/Sets/SetCard';
 
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
@@ -16,6 +17,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -101,6 +103,16 @@ export default function Sets() {
     selectAllSets(state).filter(set => folder ? folder.folder_owned_sets.includes(set.id ) : false)
   )
 
+  const GridItem = ({...props}) => {
+    return( 
+      <Grid item
+        xs={12} sm={6} md={4}
+        style={{height:'12rem'}}
+        {...props}
+      />
+    )
+  }
+
   if (!folder) {
     return (
       <div>
@@ -184,31 +196,20 @@ export default function Sets() {
               handleClose={handleAddedFormClose}
               folderId={folderId}
             />
-    {/* Slideshow start*/}
-      <div>
+     <Grid container spacing={3}>
         {sets.map((set) => {
           return (
-            <Link
-              className={classes.link}
-              to={`/set/${set.id}`}
-            >
-            <Paper className={classes.paper}>
-              <Typography gutterBottom variant="subtitle1">
-                {set.words.length} word{set.words.length === 1 ? "" : "s"}
-              </Typography>
-                <Typography variant="h5" className={classes.setName}>
-                  {set.name}
-                </Typography>
-            </Paper>
-            </Link>
+            <GridItem>
+              <SetCard setData={set} />
+            </GridItem>
           );
         })}
-      </div>
-    {/* Slideshow end */}
+      </Grid>
       </Container>
       </div>
       </div>
   );
 }
+
 
 
