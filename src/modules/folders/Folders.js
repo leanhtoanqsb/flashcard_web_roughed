@@ -18,35 +18,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
   },
-  userInfoSection: {
-    width: "100%",
-    padding: theme.spacing(2),
-    background: "white",
-  },
-  userInfoInner: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "row",
-  },
-  userImage: {
-    paddingRight: theme.spacing(2),
-  },
-  image: {
-    width: 128,
-    height: 128,
-    borderRadius: "50%",
-    overflow: 'hidden',
-  },
-  img: {
-    margin: "auto",
-    display: "block",
-    maxWidth: "100%",
-    maxHeight: "100%",
-  },
-  userText: {
-    flexGrow: 1,
-  },
   foldersListSection: {
     padding: theme.spacing(2),
     paddingTop: theme.spacing(4),

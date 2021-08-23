@@ -6,15 +6,11 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 
 const useStyles = makeStyles((theme) => ({
-  root: props => ({
-    /*
-    width: props.width,
-    height: props.height,
-    */
+  root: {
     width: '100%',
     height: '100%',
     background: 'white',
-  }),
+  },
   container: {
     width: '100%',
     height: '100%',

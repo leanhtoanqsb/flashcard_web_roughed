@@ -181,6 +181,8 @@ export default function PrimarySearchAppBar() {
             FLASHCARD
           </Typography>
             <Button component={Link} to='/' className={classes.home}>HOME</Button>
+            <Button component={Link} to='/library/folders' className={classes.library}>Your Library</Button>
+          {/*
           <Button
             className={classes.library}
             endIcon={<KeyboardArrowDownIcon />}
@@ -190,6 +192,7 @@ export default function PrimarySearchAppBar() {
           >
             Your Library
           </Button>
+          */}
           <Button
             variant='contained'
             className={classes.create}
@@ -217,10 +220,10 @@ export default function PrimarySearchAppBar() {
           </div>
           <div className={classes.sectionDesktop}>
             <IconButton
-              aria-label="show 17 new notifications"
+              aria-label="show new notifications"
               color="inherit"
             >
-              <Badge badgeContent={17} color="secondary">
+              <Badge badgeContent={0} color="secondary">
                 <NotificationsIcon />
               </Badge>
             </IconButton>

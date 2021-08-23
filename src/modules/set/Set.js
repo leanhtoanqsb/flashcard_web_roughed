@@ -1,8 +1,12 @@
-import React, { useState, useRef } from 'react'
-import { useSelector } from 'react-redux'
+import React, { useState, useRef, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { selectAllSets  } from 'modules/sets/setsSlice'
+import {
+  selectAllSets, editSet, deleteSet, fetchSets
+} from 'modules/sets/setsSlice'
 import SlideshowContainer from 'components/Slideshow/SlideshowContainer';
+import EditablePaper from 'components/Paper/EditablePaper';
+import EditableInput from 'components/Input/EditableInput_1';
 
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -18,14 +22,27 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
   },
-  slideshowSection: {
+  titleSection: {
     width: '100%',
-    height: '500px',
-    paddingTop: '50px',
+    height: '6rem',
+    paddingTop: '2rem',
     background: 'white',
   },
-  slideshowContainer: {
+  titleContainer: {
     width: '100%',
+    height: '100%',
+    display: 'flex',
+    alignItems: 'center',
+  },
+  slideshowSection: {
+    width: '100%',
+    height: '30rem',
+    background: 'white',
+    paddingBottom: '5rem',
+  },
+  slideshowContainer: {
+    minWidth: '20rem',
+    maxWidth: '40rem',
     height: '100%',
     display: 'flex',
   },
@@ -37,111 +54,85 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     height: '100%',
   },
-  paper: {
-    marginTop: theme.spacing(3),
+  termsSection: {
     width: '100%',
-    padding: '2rem 2rem',
-    display: 'flex',
-    alignItems: 'flex-start',
-    justifyContent: 'space-between',
+    paddingTop: '4rem',
+    paddingBottom: '5rem',
   },
-  inputRoot: {
-    padding: 0,
-  },
-  input: {
-    color: 'black',
-  },
-  icon: {
-    margin: 'auto 0',
-    marginLeft: theme.spacing(1),
-  },
-  editIcon: {
-  },
-  cancelIcon: {
-  },
-  submitIcon: {
+  termsContainer: {
+    width: '100%',
+    paddingTop: '2rem',
   },
 }));
 
-function EditablePaper({content}) {
-  const classes = useStyles();
-  const [isEditable, setIsEditable] = useState(false);
-  const termRef = useRef(null)
-
-  const CustomInput = ({...props}) => {
-    return(
-      <InputBase
-        classes={{
-          root: classes.inputRoot,
-          input: classes.input,
-        }}
-        disabled={!isEditable}
-        fullWidth
-        {...props}
-      />
-    )
-  }
-
-  return(
-    <Paper className={classes.paper}>
-      <CustomInput
-        inputRef={termRef}
-        defaultValue={content.term}
-      />
-      <CustomInput
-        defaultValue={content.meaning}
-        multiline
-      />
-      <div
-        style={{display: isEditable ? 'none' : 'flex' }}
-        className={classes.icons}
-      >
-      <EditIcon
-        className={`${classes.editIcon} ${classes.icon}`}
-        onClick={(e) => {
-          e.preventDefault();
-          setIsEditable(true);
-          setTimeout(() => termRef.current.focus(),100);
-        }}
-      />
-      </div>
-      <div
-        style={{display: isEditable ? 'flex' : 'none' }}
-        className={classes.icons}
-      >
-      <HighlightOffIcon
-        className={`${classes.cancelIcon} ${classes.icon}`}
-        onClick={() => setIsEditable(false)}
-      />
-      <CheckCircleOutlineIcon
-        className={`${classes.submitIcon} ${classes.icon}`}
-        onClick={() => setIsEditable(false)}
-      />
-      </div>
-    </Paper>
-  )
-}
-
 export default function Sets({match}) {
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(fetchSets())
+  }, [dispatch])
 
-  const classes = useStyles();
+  const classes = useStyles()
   const { setId } = useParams()
-
+  const [newTitle, setNewTitle] = useState(null)
+  const [newWords, setNewWords] = useState(null)
   const set = useSelector(state =>
     selectAllSets(state).find(set => set.id === parseInt(setId) )
   )
+  useEffect(() => {
+    if (set) {
+      setNewTitle(set.name)
+      const newWords = set.words.map((word) => {
+        return {...word}
+      })
+      setNewWords(newWords)
+    }
+  }, [set])
+
+  const onChangeTitle = (newTitle) => {setNewTitle(newTitle)}
+  const onSubmitTitle = () => {
+    dispatch(editSet(
+      {setId:set.id, data:{'name':newTitle}}
+    ))
+  }
+  const onCancelTitle = () => {setNewTitle(set.name)}
+
+  const onChangeWords = (index, property) => (value) => {
+    setNewWords((prev) => {
+      const newPrev = [...prev]
+      newPrev[index] = {...(newPrev[index] || {}), [property]: value}
+      return newPrev
+    })
+  }
+  const onSubmitWords = () => {
+    dispatch(editSet(
+      {setId:set.id, data:{'words':newWords}}
+    ))
+  }
+  const onCancelWords = () => {setNewWords(set.words)}
 
   if (!set) {
     return (
       <div>
-        <h1>Post not found!</h1>
+        <h1>Set not found!</h1>
       </div>
     )
   }
 
-  const words = set.words
   return (
     <div className={classes.root}>
+      <div className={classes.titleSection}>
+        <Container
+          maxWidth='md'
+          className={classes.titleContainer}
+        >
+        <EditableInput
+          content={newTitle}
+          onChange={onChangeTitle}
+          onSubmit={onSubmitTitle}
+          onCancel={onCancelTitle}
+        />
+        </Container>
+      </div>
       <div className={classes.slideshowSection}>
         <Container
           maxWidth='md'
@@ -150,21 +141,36 @@ export default function Sets({match}) {
           <div className={classes.slideshowTools}>
           </div>
           <div className={classes.slideshow}>
-            <SlideshowContainer data={words} width={'400px'} height={'400px'}/>
+            <SlideshowContainer data={set.words}/>
           </div>
         </Container>
       </div>
+      <div className={classes.termsSection}>
       <Container
         maxWidth='md'
       >
+        <Typography variant='h5'>
+          Terms in this set ({set.words.length})
+        </Typography>
+      <div className={classes.termsContainer}>
         {
-          words.map((word) => {
+          (newWords || []).map((word, idx) => {
             return(
-              <EditablePaper content={word}/>
+              <React.Fragment key={idx}>
+              <EditablePaper
+                content={word}
+                onChangeTerm={onChangeWords(idx, 'term')}
+                onChangeMeaning={onChangeWords(idx, 'meaning')}
+                onSubmit={onSubmitWords}
+                onCancel={onCancelWords}
+              />
+              </React.Fragment>
             )
           })
         }
+      </div>
       </Container>
+      </div>
     </div>
   );
 }

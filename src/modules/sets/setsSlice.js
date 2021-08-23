@@ -30,11 +30,11 @@ export const addSet = createAsyncThunk(
   }
 );
 export const editSet = createAsyncThunk(
-  "folders/editFolders",
+  "sets/editSet",
   async ({ setId, data }) => {
     const resp = await axios
       .patch(
-        `https://flashcardserverroughed.herokuapp.com/api/folder/${setId}/`,
+        `https://flashcardserverroughed.herokuapp.com/api/sets/${setId}/`,
         data
       )
       .then((res) => {
@@ -44,10 +44,10 @@ export const editSet = createAsyncThunk(
   }
 );
 export const deleteSet = createAsyncThunk(
-  "folders/deleteFolders",
+  "sets/deleteSet",
   async (setId) => {
     const resp = await axios.delete(
-      `https://flashcardserverroughed.herokuapp.com/api/folder/${setId}/`
+      `https://flashcardserverroughed.herokuapp.com/api/sets/${setId}/`
     );
   }
 );
@@ -77,6 +77,18 @@ export const setsSlice = createSlice({
     },
     [addSet.fulfilled]: (state, action) => {
       state.sets.push(action.payload);
+    },
+    [editSet.fulfilled]: (state, action) => {
+      console.log(action.payload)
+      const { id } = action.payload;
+      const existSet = state.sets.find(
+        (set) => set.id === id
+      );
+      const setIndex = state.sets.indexOf(existSet);
+      state.sets[setIndex] = action.payload;
+    },
+    [deleteSet.fulfilled]: (state) => {
+      state.status = "idle";
     },
   },
 });
