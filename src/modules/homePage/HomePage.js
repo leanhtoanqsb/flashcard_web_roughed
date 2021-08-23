@@ -46,7 +46,7 @@ export default function Sets() {
 
   return (
     <div className={classes.setListSection}>
-      <Container disableGutters="true" maxWidth="md">
+      <Container maxWidth="md">
         <Grid container spacing={3}>
           {sets.map((set) => {
             return (
