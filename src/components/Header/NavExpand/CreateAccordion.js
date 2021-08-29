@@ -1,9 +1,10 @@
-import React from 'react';
+import React,{ useState } from 'react';
 import AccordionContainer from './AccordionContainer';
 import NavLinkCustom from './NavLinkCustom';
+import FoldersAddedDialog from "components/Folders/FoldersAddedDialog";
 
 import { makeStyles } from '@material-ui/core/styles';
-
+import Button from '@material-ui/core/Button';
 const useStyles = makeStyles((theme) => ({
   menuItems: {
     width: '100%',
@@ -18,6 +19,15 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CreateAccordion({handleNavExpanded}) {
   const classes = useStyles();
+  const [foldersAddedFormOpen, setFoldersAddedFormOpen] = useState(false);
+  const handleAddedFormClose = () => {
+    setFoldersAddedFormOpen(false);
+  };
+  const handleAddedFormOpen = () => {
+    setFoldersAddedFormOpen(true);
+  };
+  console.log(foldersAddedFormOpen)
+
 
   const LibraryMenuItems = () => {
     return(
@@ -28,11 +38,14 @@ export default function CreateAccordion({handleNavExpanded}) {
         >
           <NavLinkCustom
             variant='h6'
+            to='/create-set'
           >
             Study Set
           </NavLinkCustom>
         </div>
-        <div onClick={() => handleNavExpanded(false)}>
+        <div
+          onClick={() => handleAddedFormOpen()}
+        >
           <NavLinkCustom
             variant='h6'
           >
@@ -48,6 +61,10 @@ export default function CreateAccordion({handleNavExpanded}) {
         header='Create'
       > 
         <LibraryMenuItems/>
+            <FoldersAddedDialog
+              open={foldersAddedFormOpen}
+              handleClose={handleAddedFormClose}
+            />
       </AccordionContainer>
   );
 }

@@ -21,13 +21,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function LibraryAccordion({to, variant, children}) {
+export default function NavLinkCustom({to, variant, children}) {
   const classes = useStyles();
 
   return (
     <Link
       className={classes.link}
-      component={Link}
       to={to}
     >
       <Typography

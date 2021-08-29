@@ -6,6 +6,7 @@ import { Link, useParams } from 'react-router-dom';
 import SetsAddedDialog from 'components/Sets/SetsAddedDialog';
 import SetCard from 'components/Sets/SetCard';
 import EditableInput from 'components/Input/EditableInput_1';
+import Loading from 'components/Loading/Loading';
 
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from '@material-ui/core/Paper';
@@ -70,6 +71,8 @@ export default function Sets() {
   const folder = useSelector(state =>
     selectAllFolders(state).find(folder => folder.id === parseInt(folderId)) 
   )
+  const folderStatus = useSelector(state => state.folders.status)
+  console.log(folderStatus)
   const sets = useSelector(state => 
     selectAllSets(state).filter(set => folder ? folder.folder_owned_sets.includes(set.id ) : false)
   )
@@ -99,13 +102,28 @@ export default function Sets() {
     )
   }
 
-  if (!folder) {
+  if (folderStatus == 'loading') {
     return (
-      <div>
-        <h1>Folder not found!</h1>
+    <div className={classes.root}>
+      <div className={classes.setListSection}>
+        <Loading />
       </div>
+    </div>
     )
   }
+
+  if (!folder) {
+    return (
+    <div className={classes.root}>
+      <div className={classes.setListSection}>
+        <Container maxWidth="md">
+          <h1>Folder not found!</h1>
+        </Container>
+      </div>
+    </div>
+    )
+  }
+
   return (
     <div className={classes.root}>
         <div className={classes.folderInfoSection}>

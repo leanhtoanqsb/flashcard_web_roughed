@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { selectAllFolders } from "modules/folders/foldersSlice";
 import FoldersAddedDialog from "components/Folders/FoldersAddedDialog";
 import { Link } from "react-router-dom";
+import Loading from "components/Loading/Loading";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
@@ -54,7 +55,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Folders() {
   const classes = useStyles();
-  const folders = useSelector(selectAllFolders);
+  const folders = useSelector(state => selectAllFolders(state));
+  const foldersStatus = useSelector(state => state.folders.status);
   const [foldersAddedFormOpen, setFoldersAddedFormOpen] = useState(false);
   const handleAddedFormClose = () => {
     setFoldersAddedFormOpen(false);
@@ -82,7 +84,8 @@ export default function Folders() {
               handleClose={handleAddedFormClose}
             />
             <div>
-              {folders.map((folder) => {
+              {foldersStatus == 'loading' ? <Loading /> : null}
+              {(folders || []).map((folder) => {
                 return (
                   <Link
                     key={folder.id}

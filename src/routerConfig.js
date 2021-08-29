@@ -41,6 +41,21 @@ const routerConfig = {
   },
 };
 
+export const libraryRouterConfig = {
+  FOLDER_LIBRARY: {
+    name: 'FOLDER_LIBRARY',
+    path: '/library/folders',
+    Component: () => <Folders />,
+    exact: true,
+  },
+  SETS_LIBRARY: {
+    name: 'SETS_LIBRARY',
+    path: '/library/sets',
+    Component: () => <Sets />,
+    exact: true,
+  },
+};
+
 export const generateRoutes = (config) => {
   return Object.values(config).map(route => {
     const {name, path, Component, exact} = route;

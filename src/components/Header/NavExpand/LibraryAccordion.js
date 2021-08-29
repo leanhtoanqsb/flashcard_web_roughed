@@ -22,16 +22,27 @@ export default function LibraryAccordion({handleNavExpanded}) {
 
   const LibraryMenuItems = () => {
     return(
-      <div className={classes.menuItems}>
-        <div className={classes.item} onClick={() => handleNavExpanded(false)}>
+      <div
+        className={classes.menuItems}
+          onClick={(e) => {
+            handleNavExpanded(false)
+          }}
+      >
+        <div className={classes.item}>
           <NavLinkCustom
+            to='/library/sets'
             variant='h6'
           >
             Study Sets
           </NavLinkCustom>
         </div>
-        <div onClick={() => handleNavExpanded(false)}>
+        <div
+          onClick={(e) => {
+            handleNavExpanded(false)
+          }}
+        >
           <NavLinkCustom
+            to='/library/folders'
             variant='h6'
           >
             Folders

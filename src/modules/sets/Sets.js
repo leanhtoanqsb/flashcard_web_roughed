@@ -4,6 +4,7 @@ import { selectAllSets } from 'modules/sets/setsSlice'
 import { selectAllFolders  } from 'modules/folders/foldersSlice'
 import { Link, useParams } from 'react-router-dom';
 import SetsAddedDialog from 'components/Sets/SetsAddedDialog';
+import Loading from 'components/Loading/Loading';
 
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
@@ -76,20 +77,10 @@ export default function Sets() {
     setAddedFormOpen(true);
   };
 
-  const folder = useSelector(state =>
-    selectAllFolders(state).find(folder => folder.id === parseInt(folderId)) 
-  )
   const sets = useSelector(state => 
-    selectAllSets(state).filter(set => folder ? folder.folder_owned_sets.includes(set.id ) : folderId ? false : true)
+    selectAllSets(state)
   )
-
-  if (!folder && (Array.isArray(sets) && sets.length === 0)) {
-    return (
-      <div>
-        <h1>Folder not found!</h1>
-      </div>
-    )
-  }
+  const setsStatus = useSelector(state => state.sets.status )
 
   return (
     <div className={classes.root}>
@@ -110,7 +101,11 @@ export default function Sets() {
             />
     {/* Slideshow start*/}
       <div>
-        {sets.map((set) => {
+    {
+          setsStatus == 'loading' ? <Loading /> : null
+    }
+    {
+        (sets || []).map((set) => {
           return (
             <Link
               className={classes.link}

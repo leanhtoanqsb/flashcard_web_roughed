@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { selectAllSets } from 'modules/sets/setsSlice'
 import SetCard from 'components/Sets/SetCard';
+import Loading from 'components/Loading/Loading';
 
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from '@material-ui/core/Paper';
@@ -36,11 +37,11 @@ export default function Sets() {
     )
   }
 
-  if (!sets) {
+  if (Array.isArray(sets) && sets.length == 0) {
     return (
-      <div>
-        <h1>Page not found!</h1>
-      </div>
+    <div className={classes.setListSection}>
+      <Loading />
+    </div>
     )
   }
 
