@@ -25,7 +25,7 @@ export default function Sets() {
   const sets = useSelector(state => 
     selectAllSets(state)
   )
-  console.log(sets)
+  const setsStatus = useSelector(state => state.sets.status)
 
   const GridItem = ({...props}) => {
     return( 
@@ -37,7 +37,7 @@ export default function Sets() {
     )
   }
 
-  if (Array.isArray(sets) && sets.length == 0) {
+  if (setsStatus == 'loading') {
     return (
     <div className={classes.setListSection}>
       <Loading />
@@ -49,7 +49,7 @@ export default function Sets() {
     <div className={classes.setListSection}>
       <Container maxWidth="md">
         <Grid container spacing={3}>
-          {sets.map((set) => {
+          {(sets || []).map((set) => {
             return (
               <GridItem>
                 <SetCard setData={set} />
