@@ -1,10 +1,11 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { selectAllFolders } from "modules/folders/foldersSlice";
 import FoldersAddedDialog from "components/Folders/FoldersAddedDialog";
 import { Link,Route, Switch,  useRouteMatch, useLocation } from "react-router-dom";
 import Folders from 'modules/folders/Folders';
 import Sets from 'modules/sets/Sets';
+import { fetchFolders  } from 'modules/folders/foldersSlice'
 
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
@@ -59,6 +60,12 @@ export default function LibraryPage() {
   const classes = useStyles();
   const {path, url} = useRouteMatch()
   const location = useLocation()
+
+  const dispatch = useDispatch()
+  const foldersStatus = useSelector(state => state.folders.status)
+  useEffect(() => {
+    if (foldersStatus == 'idle') dispatch(fetchFolders())
+  }, [dispatch])
 
   return (
       <div className={classes.root}>

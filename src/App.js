@@ -31,10 +31,6 @@ const THEME = createTheme({
 
 function App() {
   const dispatch = useDispatch()
-  const folderStatus = useSelector(state => state.folders.status)
-  useEffect(() => {
-    dispatch(fetchFolders())
-  }, [dispatch])
   useEffect(() => {
     dispatch(fetchSets())
   }, [dispatch])
