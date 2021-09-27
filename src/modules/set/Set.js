@@ -15,6 +15,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
 import InputBase from '@material-ui/core/InputBase';
 import EditIcon from '@material-ui/icons/Edit';
+import Divider from '@material-ui/core/Divider';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 
@@ -33,6 +34,22 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
     display: 'flex',
     alignItems: 'center',
+  },
+  userInfoSection: {
+    paddingTop: '3rem',
+    background: 'white',
+    paddingBottom: '3rem',
+  },
+  userInfoContainer: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  userAvatar: {
+    height: '4rem',
+    borderRadius: '50%',
+  },
+  userInfo: {
+    paddingLeft: '2rem',
   },
   slideshowSection: {
     width: '100%',
@@ -58,6 +75,9 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     paddingTop: '4rem',
     paddingBottom: '5rem',
+  },
+  termsHeader: {
+    fontWeight: '600',
   },
   termsContainer: {
     width: '100%',
@@ -145,11 +165,39 @@ export default function Sets({match}) {
           </div>
         </Container>
       </div>
+      <Container maxWidth='md'>
+        <Divider />
+      </Container>
+      <div className={classes.userInfoSection}>
+        <Container
+          maxWidth='md'
+          className={classes.userInfoContainer}
+        >
+          <img className={classes.userAvatar} alt="Avatar" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" />
+          <div className={classes.userInfo}>
+            <Typography
+              variant='p'
+              style={{color: '#b1b1b1',}}
+            >
+              Created by
+            </Typography>
+            <Typography
+              variant='h6'
+              style={{fontWeight: '600',}}
+            >
+              UserName
+            </Typography>
+          </div>
+        </Container>
+      </div>
       <div className={classes.termsSection}>
       <Container
         maxWidth='md'
       >
-        <Typography variant='h5'>
+        <Typography
+          variant='h5'
+          classes={{root: classes.termsHeader}}
+        >
           Terms in this set ({set.words.length})
         </Typography>
       <div className={classes.termsContainer}>

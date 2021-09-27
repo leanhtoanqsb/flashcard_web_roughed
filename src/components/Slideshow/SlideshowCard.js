@@ -36,6 +36,12 @@ const useStyles = makeStyles((theme) => ({
   back: {
     transform: 'rotateY(180deg)',
   },
+  term: {
+    fontSize: '3rem',
+  },
+  meaning: {
+    fontSize: '3rem',
+  },
 }));
 
 
@@ -49,12 +55,18 @@ export default function SlideshowCard({word}) {
     <div className={classes.root}>
       <div className={classes.container} onClick={handleFlip} >
         <div className={`${classes.inner} ${classes.front}`}>
-          <Typography variant='h2'>
+          <Typography
+            variant='p'
+            className={classes.term}
+          >
             {word.term ? word.term : 'No text'}
           </Typography>
         </div>
         <div className={`${classes.inner} ${classes.back}`}>
-          <Typography variant='h4'>
+          <Typography
+            variant='p'
+            className={classes.meaning}
+          >
             {word.meaning ? word.meaning : 'No meaning'}
           </Typography>
         </div>

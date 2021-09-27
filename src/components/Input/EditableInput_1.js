@@ -19,7 +19,8 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: '0.5rem',
   },
   input: {
-    fontSize: '2rem',
+    fontSize: '2.5rem',
+    fontWeight: '900',
     lineHeight: '2.5rem',
     color:'#000000',
   },
